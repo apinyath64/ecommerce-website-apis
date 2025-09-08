@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    
+    <div class="form-container">
+        <h2>สร้างบัญชีผู้ใช้</h2>
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <label for="username">ชื่อผู้ใช้:</label>
+                <input type="text" name="username" id="username" required placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+                <label for="email">อีเมล:</label>
+                <input type="email" name="email" id="email" required placeholder="janedoe@company.com">
+            </div>
+            <div class="form-group">
+                <label for="password">รหัสผ่าน:</label>
+                <input type="password" 
+                    name="password" 
+                    id="password" 
+                    required 
+                    placeholder="••••••••"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                    title="รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร ประกอบด้วยตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และอักขระพิเศษ(@$!%*?&)"    
+                >
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">ยืนยันรหัสผ่าน:</label>
+                <input type="password" name="confirm_password" id="confirm_password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="submit-btn">สร้างบัญชี</button>
+        </form>
+        <p>มีบัญชีผู้ใช้อยู่แล้ว <a href="login">เข้าสู่ระบบ</a></p>
+    </div>
+</body>
+</html>
