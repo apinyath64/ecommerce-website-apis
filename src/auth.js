@@ -28,14 +28,15 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', async (req, res) => {
     const data = {
-        name: req.body.username,
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        confirm_password: req.body.confirm_password 
+        confirm_password: req.body.confirm_password,
+        role: req.body.role 
     }
 
     // check user exist
-    const userExist = await collection.customerCollection.findOne({ name: data.name })
+    const userExist = await collection.customerCollection.findOne({ username: data.username })
 
     if (userExist) {
         res.status(400).send("มีผู้ใช้ชื่อนี้อยู่แล้ว กรุณาเลือกชื่อผู้ใช้อื่น")
@@ -54,9 +55,10 @@ app.post('/signup', async (req, res) => {
             data.password = hashedPassword
 
             customer = await collection.customerCollection.insertMany({
-                name: data.name,
+                username: data.username,
                 email: data.email,
                 password: data.password,
+                role: data.role
             });
             return res.status(201).send("สมัครสมาชิกเรียบร้อยแล้ว")
         }
@@ -66,14 +68,16 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     try {
-        const users = await collection.customerCollection.findOne({ name: req.body.username })
+        const users = await collection.customerCollection.findOne({ username: req.body.username })
+        console.log(users)
         if (!users) {
             return res.status(404).send("ไม่มีผู้ใช้ชื่อนี้อยู่")
         }
         const isPasswordMatch = await bcrypt.compare(req.body.password, users.password)
         if (isPasswordMatch) {
             // สร้าง accesstoken
-            const user = { name: users.username }
+            const user = { username: users.username, id: users.id }
+            
             const accessToken = generateAccessToken(user)
 
     
@@ -109,14 +113,14 @@ app.post('/refresh', async (req,res) => {
             console.log(err)
             return res.status(403).send("ไม่ได้รับสิทธิ์ในการเข้าถึง")
         }
-        const accessToken = generateAccessToken({ name: user.name })
+        const accessToken = generateAccessToken({ username: user.username, id: user.id })
         return res.json({ accessToken: accessToken })
     });
 });
 
 
 function generateAccessToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m'})
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d'})
 };
 
 
