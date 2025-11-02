@@ -50,13 +50,20 @@ const addressSchema = new mongoose.Schema({
     label: { type: String, enum: ["home", "office"], default: "home" }
 });
 
+const paymentMethodSchema = mongoose.Schema({
+    name: { type: String, required: true },
+    code: { type: String, required: true, unique: true },
+    description: { type: String },
+    is_active: { type: Boolean, default: true, required: true }
+}, { timestamps: true })
+
 
 const paymentSchema = mongoose.Schema({
     customer: { type: mongoose.Schema.Types.ObjectId, ref: "customers", required: true },
     amount: { type: Number, required: true },
     currency: { type: String, default: 'thb' },
     charge_id: { type: String, required: true },
-    payment_method: { type: String, enum: ["credit_card", "promptpay"], default: "credit_card", required: true },
+    payment_method: { type: mongoose.Schema.Types.ObjectId, ref: 'payment_methods', required: true },
     payment_status: { type: String, enum: ["pending", "successful", "failed"], default: "pending" },
     is_paid: { type: Boolean, default: false }
 });
@@ -107,6 +114,7 @@ const paymentCollection = mongoose.model("payments", paymentSchema)
 const orderCollection = mongoose.model("orders", orderSchema)
 const favoriteCollection = mongoose.model("favorites", favoriteSchema)
 const shippingCollection = mongoose.model("shippings", shippingSchema)
+const paymentMethodCollection = mongoose.model("payment_methods", paymentMethodSchema)
 
 
 module.exports = { 
@@ -118,6 +126,7 @@ module.exports = {
     paymentCollection,
     orderCollection,
     favoriteCollection,
-    shippingCollection
+    shippingCollection,
+    paymentMethodCollection
 };
 
