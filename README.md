@@ -33,12 +33,12 @@ Address validation | Nominatim (OpenStreetMap) |
 Testing | Postman |
 Documentation | Postman API Docs |
 
-## Getting started
+## Getting Started
 ### Installing and Setup
   1. Clone the repository
   ```
-  git clone https://github.com/yourusername/ecommerce-api.git
-  cd ecommerce-api
+  git clone https://github.com/apinyath64/ecommerce-website-apis.git
+  cd ecommerce-website-apis
   ```
 
   2. Install dependencies
@@ -70,4 +70,6 @@ Documentation | Postman API Docs |
 
 ## API Documentation
 API docementation with request and response examples is available here:
-[View Postman API Documentation](https://github.com/apinyath64/ecommerce-website-apis)
+[View Postman API Documentation](https://documenter.getpostman.com/view/44010636/2sB3WpRgQx)
+
+
